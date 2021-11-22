@@ -10,7 +10,7 @@ public class CatalagoFilmesApplication {
 		SpringApplication.run(CatalagoFilmesApplication.class, args);
 		
 		Usuario u = new Usuario(null, null, 0, null, null);
-		
+		System.out.println(u.getIdade());
 		
 	}
 
