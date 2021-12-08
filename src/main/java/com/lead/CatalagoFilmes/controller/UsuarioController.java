@@ -2,8 +2,12 @@ package com.lead.CatalagoFilmes.controller;
 
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,31 +18,32 @@ import com.lead.CatalagoFilmes.service.UsuarioService;
 
 @Controller
 public class UsuarioController {
+
 	@Autowired
-	UsuarioService usuarioService;
-	
+	private UsuarioService usuarioService;
+
 	@GetMapping("/usuarios")
-	public List<Usuario> listaUsuarios() {
-		return usuarioService.findAll();
-	}
-	
-	@GetMapping("/usuariosById")
-	public Usuario listaUsuariosById(@RequestBody Long id) {
-		return usuarioService.findById(id);
-	}
-	
-	@PostMapping("/salvaUsuario")
-	public Usuario salvaUsuario(@RequestBody Usuario usuario) {
-		return usuarioService.save(usuario);
-	}
-	
-	@PutMapping("/atualizaUsuario")
-	public Usuario atualizaUsuario(@RequestBody Usuario usuario) {
-		return usuarioService.update(usuario);
+	public ResponseEntity<List<Usuario>> listaUsuarios() {
+		return ResponseEntity.ok().body(usuarioService.findAll());
 	}
 
-	@DeleteMapping("/deleteUsuarioById")
-	public String deleteUsuarioById(@RequestBody Long id) {
-		return usuarioService.deleteById(id);
+	@GetMapping("/usuarioById/{id}")
+	public ResponseEntity<Usuario> listaUsuarioById(@PathVariable Long id) {
+		return ResponseEntity.ok().body(usuarioService.findById(id));
+	}
+
+	@PostMapping("/salvaUsuario")
+	public ResponseEntity<Usuario> salvaUsuario(@RequestBody Usuario usuario) {
+		return ResponseEntity.ok().body(usuarioService.save(usuario));
+	}
+
+	@PutMapping("/atualizaUsuario")
+	public ResponseEntity<Usuario> atualizaUsuario(@RequestBody Usuario usuario) {
+		return ResponseEntity.ok().body(usuarioService.update(usuario));
+	}
+
+	@DeleteMapping("/deleteUsuarioById/{id}")
+	public ResponseEntity<String> deleteUsuarioById(@PathVariable Long id) {
+		return ResponseEntity.ok().body(usuarioService.deleteById(id));
 	}
 }

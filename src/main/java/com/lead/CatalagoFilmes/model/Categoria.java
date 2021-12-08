@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Getter
 @Setter
@@ -14,14 +15,16 @@ import javax.persistence.Id;
 
 @Entity
 public class Categoria {
-	
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;
-    
-    @Column(name = "CATEGORIA_TAG")
-    private String tag;
 
-    @Column(name = "CATEGORIA_NOME")
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
+
+    @Column
     private String nome;
 
+    @Column
+    private String tag;
+
+    @ManyToOne
+    private Idioma idioma;
 }

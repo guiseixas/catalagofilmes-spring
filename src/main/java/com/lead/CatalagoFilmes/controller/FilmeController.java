@@ -2,8 +2,12 @@ package com.lead.CatalagoFilmes.controller;
 
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,34 +18,39 @@ import com.lead.CatalagoFilmes.model.Filme;
 import com.lead.CatalagoFilmes.service.FilmeService;
 
 @Controller
-@RequestMapping(value = "/filme")	
+@RequestMapping(value = "/filme")
 public class FilmeController {
-	
+
 	@Autowired
-	FilmeService filmeService;
-	
+	private FilmeService filmeService;
+
 	@GetMapping("/filmes")
-	public List<Filme> listaFilmes() {
-		return filmeService.findAll();
-	}
-	
-	@GetMapping("/filmesById")
-	public Filme listaFilmesById(@RequestBody Long id) {
-		return filmeService.findById(id);
-	}
-	
-	@PostMapping("/salvaFilme")
-	public Filme salvaFilme(@RequestBody Filme filme) {
-		return filmeService.save(filme);
-	}
-	
-	@PutMapping("/atualizaFilme")
-	public Filme atualizaFilme(@RequestBody Filme filme) {
-		return filmeService.update(filme);
+	public ResponseEntity<List<Filme>> listaFilmes() {
+		return ResponseEntity.ok().body(filmeService.findAll());
 	}
 
-	@DeleteMapping("/deleteFilmeById")
-	public String deleteFilmeById(@RequestBody Long id) {
-		return filmeService.deleteById(id);
+	@GetMapping("/filmeBusca/{tituloFilme}")
+	public ResponseEntity<List<Filme>> searchName(@PathVariable String tituloFilme) {
+		return ResponseEntity.ok().body(filmeService.searchName(tituloFilme));
+	}
+
+	@GetMapping("/filmeById/{id}")
+	public ResponseEntity<Filme> listaFilmeById(@PathVariable Long id) {
+		return ResponseEntity.ok().body(filmeService.findById(id));
+	}
+
+	@PostMapping("/salvaFilme")
+	public ResponseEntity<Filme> salvaFilme(@RequestBody Filme filme) {
+		return ResponseEntity.ok().body(filmeService.save(filme));
+	}
+
+	@PutMapping("/atualizaFilme")
+	public ResponseEntity<Filme> atualizaFilme(@RequestBody Filme filme) {
+		return ResponseEntity.ok().body(filmeService.update(filme));
+	}
+
+	@DeleteMapping("/deleteFilmeById/{id}")
+	public ResponseEntity<String> deleteFilmeById(@PathVariable Long id) {
+		return ResponseEntity.ok().body(filmeService.deleteById(id));
 	}
 }

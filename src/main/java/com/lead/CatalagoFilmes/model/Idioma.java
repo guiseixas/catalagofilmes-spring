@@ -1,6 +1,9 @@
 package com.lead.CatalagoFilmes.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,17 +14,16 @@ import javax.persistence.Id;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
 @Entity
 public class Idioma {
-    
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;
-	
-    @Column(name = "IDIOMA_TAG")
-    private String tag;
 
-    @Column(name = "IDIOMA_NOME")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column
     private String nome;
 
+    @Column
+    private String tag;
 }

@@ -1,5 +1,6 @@
 package com.lead.CatalagoFilmes.model;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,25 +14,28 @@ import javax.persistence.*;
 
 @Entity
 public class Filme {
-    
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;
-	
-    @Column(name = "FILME_SINOPSE")
-    private String sinopse;
 
-    @Column(name = "FILME_TITULO")
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
+
+    @Column
     private String titulo;
 
-    @Column(name = "FILME_LANCAMENTO")
+    @Column
+    private String sinopse;
+
+    @Column
+    private String imagem;
+
+    @Column
     private String dataLancamento;
 
-    @Column(name = "FILME_DURACAO")
+    @Column
     private String duracao;
 
     @ManyToOne
     private Idioma idioma;
-    
+
     @ManyToOne
     private Categoria categoria;
 }

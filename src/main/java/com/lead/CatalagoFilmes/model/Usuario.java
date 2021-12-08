@@ -1,41 +1,39 @@
 package com.lead.CatalagoFilmes.model;
 
 import lombok.*;
-import org.springframework.stereotype.Component;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 
-@Component
 @Entity
 public class Usuario {
-	
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;
-	
-	@Column(name="USER_CPF", unique = true)
-	private String cpf;
 
-	@Column(name = "USER_NOME")
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
+
+	@Column
 	private String nome;
 
-	@Column(name = "USER_TELEFONE")
+	@Column
+	private String cpf;
+
+	@Column
 	private String telefone;
 
-	@Column(name = "USER_EMAIL")
+	@Column
 	private String email;
 
-	@Column(name = "USER_SENHA")
+	@Column
 	private String senha;
 
-	@Column(name = "USER_IMAGEM")
-	private String imagem;
-
+	@OneToOne
+	private Idioma idioma;
 }
