@@ -1,6 +1,7 @@
 package com.lead.CatalagoFilmes.service;
 
 
+import com.lead.CatalagoFilmes.model.Categoria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.lead.CatalagoFilmes.model.Filme;
@@ -12,6 +13,9 @@ public class FilmeService {
 
 	@Autowired
 	private FilmeRepository filmeRepository;
+
+	@Autowired
+	private CategoriaService categoriaService;
 
 	public List<Filme> findAll() {
 		return filmeRepository.findAll();
@@ -35,4 +39,12 @@ public class FilmeService {
 	}
 
 	public List<Filme> searchName(String tituloFilme){ return filmeRepository.searchName(tituloFilme); }
+
+	public List<Filme> findByCategoria(Long id){
+		Categoria c = categoriaService.findById(id);
+		if(c != null) {
+			return filmeRepository.findByCategoria(c);
+		}
+		return null;
+	}
 }

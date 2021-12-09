@@ -53,9 +53,9 @@ import java.util.Arrays;
             Usuario Elano = new Usuario(null, "Elano", "000-000-000-00", "+00-000-00000000", "elanoDescomplica@email.com", "queSenha", ingles);
             Usuario Cleber = new Usuario(null, "Cleber", "000.000.000-00", "+000000000-0000", "emailDescomplica@email.com", "queSenha?", portugues);
 
-            /*idiomaRepository.saveAll(Arrays.asList(ingles, portugues));
+            idiomaRepository.saveAll(Arrays.asList(ingles, portugues));
             categoriaRepository.saveAll(Arrays.asList(aventura));
             filmeRepository.saveAll(Arrays.asList(filme, filme2));
-            usuarioRepository.saveAll(Arrays.asList(Elano, Cleber));*/
+            usuarioRepository.saveAll(Arrays.asList(Elano, Cleber));
         }
     }

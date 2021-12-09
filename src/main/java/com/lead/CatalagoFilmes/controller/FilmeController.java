@@ -2,6 +2,8 @@ package com.lead.CatalagoFilmes.controller;
 
 import java.util.List;
 
+import com.lead.CatalagoFilmes.model.Categoria;
+import com.lead.CatalagoFilmes.service.CategoriaService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class FilmeController {
 
 	@Autowired
 	private FilmeService filmeService;
+
+	@Autowired
+	private CategoriaService categoriaService;
 
 	@GetMapping("/filmes")
 	public ResponseEntity<List<Filme>> listaFilmes() {
@@ -53,4 +58,11 @@ public class FilmeController {
 	public ResponseEntity<String> deleteFilmeById(@PathVariable Long id) {
 		return ResponseEntity.ok().body(filmeService.deleteById(id));
 	}
+
+	@GetMapping("/getFilmesByCategoria/{id}")
+	public ResponseEntity<List<Filme>> findByCategoria(@PathVariable Long id){
+		return ResponseEntity.ok().body(filmeService.findByCategoria(id));
+	}
+
+
 }
