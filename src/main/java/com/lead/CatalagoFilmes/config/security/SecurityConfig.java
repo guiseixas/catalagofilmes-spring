@@ -1,10 +1,13 @@
-package com.lead.CatalagoFilmes.config;
+package com.lead.CatalagoFilmes.config.security;
 /*
 import com.lead.CatalagoFilmes.security.TokenAuthenticationFilter;
 import com.lead.CatalagoFilmes.service.AuthenticationService;
 
  */
+import antlr.Token;
+import com.lead.CatalagoFilmes.repository.UsuarioRepository;
 import com.lead.CatalagoFilmes.service.AuthenticationService;
+import com.lead.CatalagoFilmes.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +28,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private AuthenticationService authenticationService;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private TokenService tokenService;
 
     @Override
     @Bean
@@ -54,9 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-                //.and().addFilterBefore(new TokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().addFilterBefore(new AuthenticationTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
     }
 
     //Configurações de recursos estáticos (css, imagens)

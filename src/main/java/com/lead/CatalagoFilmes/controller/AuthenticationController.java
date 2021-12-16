@@ -2,12 +2,8 @@ package com.lead.CatalagoFilmes.controller;
 
 import com.lead.CatalagoFilmes.DTO.TokenDTO;
 import com.lead.CatalagoFilmes.DTO.UsuarioDTO;
-import com.lead.CatalagoFilmes.model.Usuario;
-import com.lead.CatalagoFilmes.service.AuthenticationService;
-import com.lead.CatalagoFilmes.service.TokenService;
-import com.lead.CatalagoFilmes.service.UsuarioService;
+import com.lead.CatalagoFilmes.config.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,8 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.stream.DoubleStream;
 
 @RestController
 @RequestMapping("/auth")
