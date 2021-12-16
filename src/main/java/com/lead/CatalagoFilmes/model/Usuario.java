@@ -5,6 +5,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -29,19 +31,29 @@ public class Usuario implements UserDetails {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
-	@Column
+	@Column(nullable = false)
+	@NotBlank
+	@NotEmpty
 	private String nome;
 
-	@Column
+	@Column(nullable = false)
+	@NotBlank
+	@NotEmpty
 	private String cpf;
 
-	@Column
+	@Column(nullable = false)
+	@NotBlank
+	@NotEmpty
 	private String telefone;
 
-	@Column
+	@Column(nullable = false)
+	@NotBlank
+	@NotEmpty
 	private String email;
 
-	@Column
+	@Column(nullable = false)
+	@NotBlank
+	@NotEmpty
 	private String senha;
 
 	@OneToOne

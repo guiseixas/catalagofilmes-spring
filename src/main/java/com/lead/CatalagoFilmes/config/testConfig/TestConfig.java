@@ -1,4 +1,4 @@
-package com.lead.CatalagoFilmes.config;
+package com.lead.CatalagoFilmes.config.testConfig;
 
 import com.lead.CatalagoFilmes.model.Categoria;
 import com.lead.CatalagoFilmes.model.Filme;

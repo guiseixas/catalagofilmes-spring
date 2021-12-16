@@ -38,26 +38,4 @@ public class AuthenticationController {
             return ResponseEntity.badRequest().build();
         }
     }
-
-    /*@Autowired
-    private TokenService tokenService;
-
-    @Autowired
-    private UsuarioService usuarioService;
-
-    @PostMapping
-    public ResponseEntity<Usuario> auth(@RequestBody @Validated UsuarioDTO user){
-        Usuario usuario = new Usuario();
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getSenha());
-        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-
-        if(authentication != null){
-            usuario = usuarioService.findByEmail(user.getEmail());
-            usuario.setToken(tokenService.generateToken(authentication));
-            return ResponseEntity.ok().body(usuario);
-        }
-
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-    }
-     */
 }

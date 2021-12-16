@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.lead.CatalagoFilmes.model.Idioma;
 import com.lead.CatalagoFilmes.service.IdiomaService;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping(value = "/idioma")
 public class IdiomaController {
@@ -34,12 +36,12 @@ public class IdiomaController {
 	}
 
 	@PostMapping("/salvaIdioma")
-	public ResponseEntity<Idioma> salvaIdioma(@RequestBody Idioma idioma) {
+	public ResponseEntity<Idioma> salvaIdioma(@RequestBody @Valid Idioma idioma) {
 		return ResponseEntity.ok().body(idiomaService.save(idioma));
 	}
 
 	@PutMapping("/atualizaIdioma")
-	public ResponseEntity<Idioma> atualizaIdioma(@RequestBody Idioma idioma) {
+	public ResponseEntity<Idioma> atualizaIdioma(@RequestBody @Valid Idioma idioma) {
 		return ResponseEntity.ok().body(idiomaService.update(idioma));
 	}
 

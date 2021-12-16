@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.lead.CatalagoFilmes.model.Filme;
 import com.lead.CatalagoFilmes.service.FilmeService;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping(value = "/filme")
 public class FilmeController {
@@ -45,12 +47,12 @@ public class FilmeController {
 	}
 
 	@PostMapping("/salvaFilme")
-	public ResponseEntity<Filme> salvaFilme(@RequestBody Filme filme) {
+	public ResponseEntity<Filme> salvaFilme(@RequestBody @Valid Filme filme) {
 		return ResponseEntity.ok().body(filmeService.save(filme));
 	}
 
 	@PutMapping("/atualizaFilme")
-	public ResponseEntity<Filme> atualizaFilme(@RequestBody Filme filme) {
+	public ResponseEntity<Filme> atualizaFilme(@RequestBody @Valid Filme filme) {
 		return ResponseEntity.ok().body(filmeService.update(filme));
 	}
 

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.lead.CatalagoFilmes.model.Usuario;
 import com.lead.CatalagoFilmes.service.UsuarioService;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping(value = "/usuario")
 public class UsuarioController {
@@ -34,12 +36,12 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/salvaUsuario")
-	public ResponseEntity<Usuario> salvaUsuario(@RequestBody Usuario usuario) {
+	public ResponseEntity<Usuario> salvaUsuario(@RequestBody @Valid Usuario usuario) {
 		return ResponseEntity.ok().body(usuarioService.save(usuario));
 	}
 
 	@PutMapping("/atualizaUsuario")
-	public ResponseEntity<Usuario> atualizaUsuario(@RequestBody Usuario usuario) {
+	public ResponseEntity<Usuario> atualizaUsuario(@RequestBody @Valid Usuario usuario) {
 		return ResponseEntity.ok().body(usuarioService.update(usuario));
 	}
 

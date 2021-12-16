@@ -1,13 +1,7 @@
 package com.lead.CatalagoFilmes.config.security;
-/*
-import com.lead.CatalagoFilmes.security.TokenAuthenticationFilter;
-import com.lead.CatalagoFilmes.service.AuthenticationService;
 
- */
-import antlr.Token;
 import com.lead.CatalagoFilmes.repository.UsuarioRepository;
 import com.lead.CatalagoFilmes.service.AuthenticationService;
-import com.lead.CatalagoFilmes.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -69,6 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     //Configurações de recursos estáticos (css, imagens)
     @Override
-    public void configure(WebSecurity web) throws Exception { }
+    public void configure(WebSecurity web) throws Exception {
+
+    }
 
 }

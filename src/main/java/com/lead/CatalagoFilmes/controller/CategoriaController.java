@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.lead.CatalagoFilmes.service.CategoriaService;
 import com.lead.CatalagoFilmes.model.Categoria;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping(value = "/categoria")
 public class CategoriaController {
@@ -33,12 +35,12 @@ public class CategoriaController {
 	}
 
 	@PostMapping("/salvaCategoria")
-	public ResponseEntity<Categoria> salvaCategoria(@RequestBody Categoria categoria) {
+	public ResponseEntity<Categoria> salvaCategoria(@RequestBody @Valid Categoria categoria) {
 		return ResponseEntity.ok().body(categoriaService.save(categoria));
 	}
 
 	@PutMapping("atualizaCategoria")
-	public ResponseEntity<Categoria> atualizaCategoria(@RequestBody Categoria categoria) {
+	public ResponseEntity<Categoria> atualizaCategoria(@RequestBody @Valid Categoria categoria) {
 		return ResponseEntity.ok().body(categoriaService.update(categoria));
 	}
 

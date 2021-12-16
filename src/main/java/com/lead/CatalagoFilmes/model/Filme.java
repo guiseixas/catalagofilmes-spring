@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter
@@ -18,19 +20,26 @@ public class Filme {
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
+    @NotBlank
+    @NotEmpty
     private String titulo;
 
-    @Column
+    @Column(nullable = false)
+    @NotBlank
+    @NotEmpty
     private String sinopse;
 
-    @Column
     private String imagem;
 
-    @Column
+    @Column(nullable = false)
+    @NotBlank
+    @NotEmpty
     private String dataLancamento;
 
-    @Column
+    @Column(nullable = false)
+    @NotBlank
+    @NotEmpty
     private String duracao;
 
     @ManyToOne
