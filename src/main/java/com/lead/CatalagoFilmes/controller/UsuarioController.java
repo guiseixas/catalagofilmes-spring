@@ -17,6 +17,7 @@ import com.lead.CatalagoFilmes.model.Usuario;
 import com.lead.CatalagoFilmes.service.UsuarioService;
 
 @Controller
+@RequestMapping(value = "/usuario")
 public class UsuarioController {
 
 	@Autowired

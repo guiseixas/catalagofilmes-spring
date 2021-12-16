@@ -20,7 +20,11 @@ public class UsuarioService {
 	public Usuario findById(Long id) {
 		return usuarioRepository.findById(id).get();
 	}
-	
+
+	public Usuario findByEmail(String email) {
+		return usuarioRepository.findByEmail(email).get();
+	}
+
 	public Usuario save(Usuario usuario) {
 		return usuarioRepository.save(usuario);
 	}
@@ -33,4 +37,6 @@ public class UsuarioService {
 		usuarioRepository.deleteById(id);
 		return "deletado com sucesso.";
 	}
+
+
 }

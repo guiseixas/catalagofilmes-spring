@@ -16,7 +16,7 @@ import java.util.Arrays;
 
 
     @Configuration
-    public class testConfig implements CommandLineRunner {
+    public class TestConfig implements CommandLineRunner {
         @Autowired
         private IdiomaRepository idiomaRepository;
         @Autowired
@@ -50,13 +50,14 @@ import java.util.Arrays;
             Filme filme2 = new Filme(null, "Cleber, o cacto", "O filme retrata a vida diária de Cleber e sua vida de cacto apreciando o sol e uma brisa", "Finge que tem uma imagem aqui", "20/01/2021", "1hr", portugues, aventura);
 
 
-            Usuario Elano = new Usuario(null, "Elano", "000-000-000-00", "+00-000-00000000", "elanoDescomplica@email.com", "queSenha", ingles);
+            Usuario Elano = new Usuario(null, "Elano", "000-000-000-00", "+00-000-00000000", "elanoDescomplica@email.com", "$2a$10$K4HhGAJZy6jU./HceF1OieghevmxiCmuIybWYr04M6pPhs..d7jFm", ingles);
             Usuario Cleber = new Usuario(null, "Cleber", "000.000.000-00", "+000000000-0000", "emailDescomplica@email.com", "queSenha?", portugues);
 
             /*idiomaRepository.saveAll(Arrays.asList(ingles, portugues));
             categoriaRepository.saveAll(Arrays.asList(aventura));
             filmeRepository.saveAll(Arrays.asList(filme, filme2));
             usuarioRepository.saveAll(Arrays.asList(Elano, Cleber));
-            */
+             */
+
         }
     }
