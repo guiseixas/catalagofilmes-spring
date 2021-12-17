@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.lead.CatalagoFilmes.model.Categoria;
 import com.lead.CatalagoFilmes.repository.CategoriaRepository;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,9 +19,7 @@ public class CategoriaService {
 		return categoriaRepository.findAll();
 	}
 	
-	public Categoria findById(Long id) {
-		return categoriaRepository.findById(id).get();
-	}
+	public Categoria findById(Long id) { return categoriaRepository.findById(id).get(); }
 	
 	//Primeiro a ser feito, gera o ID.
 	public Categoria save(Categoria categoria) {

@@ -32,7 +32,6 @@ public class AuthenticationController {
         try {
             Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
             String token = tokenService.generateToken(authentication);
-            //Retornando token para o cliente da API
             return ResponseEntity.ok(new TokenDTO(token, "Bearer")) ;
         } catch (AuthenticationException e) {
             return ResponseEntity.badRequest().build();

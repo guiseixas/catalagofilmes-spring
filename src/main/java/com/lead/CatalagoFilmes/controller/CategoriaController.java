@@ -1,8 +1,8 @@
 package com.lead.CatalagoFilmes.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,27 +25,62 @@ public class CategoriaController {
 	private CategoriaService categoriaService;
 
 	@GetMapping("/categorias")
-	public ResponseEntity<List<Categoria>> listaCategorias() {
-		return ResponseEntity.ok().body(categoriaService.findAll());
+	public ResponseEntity<?> listaCategorias() {
+		try{
+			List<Categoria> categorias = categoriaService.findAll();
+			if(categorias.isEmpty()){
+				throw new Exception("Não há categorias cadastradas.");
+			}
+			return ResponseEntity.ok().body(categorias);
+		}catch (Exception e){
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@GetMapping("/categoriaById/{id}")
-	public ResponseEntity<Categoria> listaCategoriaById(@PathVariable Long id) {
-		return ResponseEntity.ok().body(categoriaService.findById(id));
+	public ResponseEntity<?> listaCategoriaById(@PathVariable Long id) {
+		try {
+			Categoria categoria = categoriaService.findById(id);
+			if(categoria == null){
+				return new ResponseEntity<String>("Não há categoria com o id especificado", HttpStatus.NOT_FOUND);
+			}
+			return ResponseEntity.ok().body(categoria);
+		} catch (Exception e){
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@PostMapping("/salvaCategoria")
-	public ResponseEntity<Categoria> salvaCategoria(@RequestBody @Valid Categoria categoria) {
-		return ResponseEntity.ok().body(categoriaService.save(categoria));
+	public ResponseEntity<?> salvaCategoria(@RequestBody @Valid Categoria categoria) {
+		try{
+			return ResponseEntity.ok().body(categoriaService.save(categoria));
+		}catch (Exception e){
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
-	@PutMapping("atualizaCategoria")
-	public ResponseEntity<Categoria> atualizaCategoria(@RequestBody @Valid Categoria categoria) {
-		return ResponseEntity.ok().body(categoriaService.update(categoria));
+	@PutMapping("/atualizaCategoria")
+	public ResponseEntity<?> atualizaCategoria(@RequestBody @Valid Categoria categoria) {
+		try{
+			if(categoria == null){
+				return new ResponseEntity<String>("Não há essa categoria.", HttpStatus.NOT_FOUND);
+			}
+			return ResponseEntity.ok().body(categoriaService.update(categoria));
+		}catch (Exception e){
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@DeleteMapping("/deleteCategoriaById/{id}")
 	public ResponseEntity<String> deleteCategoriaById(@PathVariable Long id) {
-		return ResponseEntity.ok().body(categoriaService.deleteById(id));
+		try{
+			String delete = categoriaService.deleteById(id);
+			if(delete != "deletado com sucesso."){
+				return new ResponseEntity<String>("Não há categoria com o id especificado", HttpStatus.NOT_FOUND);
+			}
+			return ResponseEntity.ok().body(delete);
+		}catch(Exception e){
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 	}
 }
