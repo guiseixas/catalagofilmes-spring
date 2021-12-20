@@ -46,7 +46,7 @@ public class CategoriaController {
 			}
 			return ResponseEntity.ok().body(categoria);
 		} catch (Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -75,12 +75,9 @@ public class CategoriaController {
 	public ResponseEntity<String> deleteCategoriaById(@PathVariable Long id) {
 		try{
 			String delete = categoriaService.deleteById(id);
-			if(delete != "deletado com sucesso."){
-				return new ResponseEntity<String>("Não há categoria com o id especificado", HttpStatus.NOT_FOUND);
-			}
 			return ResponseEntity.ok().body(delete);
 		}catch(Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
 }

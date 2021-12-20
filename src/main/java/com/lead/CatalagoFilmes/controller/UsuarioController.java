@@ -48,7 +48,7 @@ public class UsuarioController {
 			}
 			return ResponseEntity.ok().body(usuario);
 		}catch (Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -77,12 +77,9 @@ public class UsuarioController {
 	public ResponseEntity<String> deleteUsuarioById(@PathVariable Long id) {
 		try{
 			String delete = usuarioService.deleteById(id);
-			if(delete != "deletado com sucesso."){
-				return new ResponseEntity<String>("Não há usuário com o id especificado", HttpStatus.NOT_FOUND);
-			}
 			return ResponseEntity.ok().body(delete);
 		}catch (Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
 }

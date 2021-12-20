@@ -2,10 +2,7 @@ package com.lead.CatalagoFilmes.controller;
 
 import java.util.List;
 
-import com.lead.CatalagoFilmes.model.Categoria;
 import com.lead.CatalagoFilmes.service.CategoriaService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +47,7 @@ public class FilmeController {
 		try{
 			List<Filme> filmes = filmeService.searchName(tituloFilme);
 			if(filmes.isEmpty()){
-				throw new Exception("Não há filmes cadastrados com este nome.");
+				throw new Exception("Não há filmes cadastrados com este título.");
 			}
 			return ResponseEntity.ok().body(filmes);
 		}catch (Exception e){
@@ -63,11 +60,11 @@ public class FilmeController {
 		try{
 			Filme filme = filmeService.findById(id);
 			if(filme == null){
-				return new ResponseEntity<String>("Não há filme com o id especificado.", HttpStatus.NOT_FOUND);
+				throw new Exception("Não há filme com esse id cadastrado.");
 			}
 			return ResponseEntity.ok().body(filme);
 		}catch (Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -96,12 +93,9 @@ public class FilmeController {
 	public ResponseEntity<?> deleteFilmeById(@PathVariable Long id) {
 		try{
 			String delete = filmeService.deleteById(id);
-			if(delete != "deletado com sucesso."){
-				return new ResponseEntity<String>("Não há filme com o id especificado", HttpStatus.NOT_FOUND);
-			}
 			return ResponseEntity.ok().body(delete);
 		}catch(Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -114,9 +108,8 @@ public class FilmeController {
 			}
 			return ResponseEntity.ok().body(filmes);
 		}catch (Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
-
 
 }
