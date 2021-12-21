@@ -49,7 +49,6 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
         if(token == null || token.isEmpty() || !token.startsWith("Bearer ")){
             return null;
         }
-        //Tirando o bearer com o espaço
         return token.substring(7, token.length());
     }
 }

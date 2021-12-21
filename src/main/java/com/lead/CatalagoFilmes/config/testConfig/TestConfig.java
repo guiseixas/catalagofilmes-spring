@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
+import javax.persistence.Id;
 import java.util.Arrays;
 
 
@@ -32,21 +33,30 @@ import java.util.Arrays;
             Idioma ingles = new Idioma();
             ingles.setId(null);
             ingles.setNome("Inglês");
-            ingles.setTag("En");
+            ingles.setTag("EN-USA");
 
             Idioma portugues = new Idioma();
-            portugues.setId(null);
+            portugues.setId(1L);
             portugues.setNome("Português-brasileiro");
             portugues.setTag("PT-BR");
 
+            Idioma espanhol = new Idioma();
+            espanhol.setId(null);
+            espanhol.setNome("Espanhol-AMSUL");
+            espanhol.setTag("ESP-SUL");
+
             Categoria aventura = new Categoria();
-
             aventura.setId(null);
+            aventura.setNome("Aventura");
+            aventura.setTag("AVENT");
 
-            aventura.setNome("aventura");
-            aventura.setTag("avent");
+            Categoria drama = new Categoria();
+            drama.setId(1L);
+            drama.setNome("Drama");
+            drama.setTag("DRM");
+            drama.setIdioma(portugues);
 
-            Filme filme = new Filme(null, "The secret life of ElanoDescomplica", "Elano vivi no seu mundo da lua e de repente encontra o seu real propósito de vida", "fingi que realmente tem uma imagem", "20/12/2013", "1h 54min", portugues, aventura);
+            Filme filme = new Filme(null, "The secret life of ElanoDescomplica", "Elano vivi no seu mundo da lua e de repente encontra o seu real propósito de vida", "fingi que realmente tem uma imagem", "20/12/2013", "1h 54min", portugues, drama);
             Filme filme2 = new Filme(null, "Cleber, o cacto", "O filme retrata a vida diária de Cleber e sua vida de cacto apreciando o sol e uma brisa", "Finge que tem uma imagem aqui", "20/01/2021", "1hr", portugues, aventura);
 
 
@@ -54,7 +64,7 @@ import java.util.Arrays;
             Usuario Cleber = new Usuario(null, "Cleber", "000.000.000-00", "+000000000-0000", "emailDescomplica@email.com", "queSenha?", portugues);
 
             /*idiomaRepository.saveAll(Arrays.asList(ingles, portugues));
-            categoriaRepository.saveAll(Arrays.asList(aventura));
+            categoriaRepository.saveAll(Arrays.asList(aventura, drama));
             filmeRepository.saveAll(Arrays.asList(filme, filme2));
             usuarioRepository.saveAll(Arrays.asList(Elano, Cleber));
              */

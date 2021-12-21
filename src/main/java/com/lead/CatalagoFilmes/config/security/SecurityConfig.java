@@ -63,8 +63,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     //Configurações de recursos estáticos (css, imagens)
     @Override
-    public void configure(WebSecurity web) throws Exception {
-
-    }
+    public void configure(WebSecurity web) throws Exception { }
 
 }
