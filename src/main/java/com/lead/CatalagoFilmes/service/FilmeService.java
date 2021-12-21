@@ -38,6 +38,14 @@ public class FilmeService {
 		return "deletado com sucesso.";
 	}
 
+	public boolean verificaId(Long id){
+		if(filmeRepository.existsById(id)) {
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 	public List<Filme> searchName(String tituloFilme){ return filmeRepository.searchName(tituloFilme); }
 
 	public List<Filme> findByCategoria(Long id){

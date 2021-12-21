@@ -38,5 +38,11 @@ public class UsuarioService {
 		return "deletado com sucesso.";
 	}
 
-
+	public boolean verificaId(Long id){
+		if(usuarioRepository.existsById(id)) {
+			return true;
+		}else{
+			return false;
+		}
+	}
 }

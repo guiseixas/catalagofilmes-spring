@@ -40,11 +40,11 @@ public class CategoriaController {
 	@GetMapping("/categoriaById/{id}")
 	public ResponseEntity<?> listaCategoriaById(@PathVariable Long id) {
 		try {
-			Categoria categoria = categoriaService.findById(id);
-			if(categoria == null){
+			Boolean teste = categoriaService.verificaId(id);
+			if(!teste){
 				return new ResponseEntity<String>("Não há categoria com o id especificado", HttpStatus.NOT_FOUND);
 			}
-			return ResponseEntity.ok().body(categoria);
+			return ResponseEntity.ok().body(categoriaService.findById(id));
 		} catch (Exception e){
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
@@ -62,7 +62,7 @@ public class CategoriaController {
 	@PutMapping("/atualizaCategoria")
 	public ResponseEntity<?> atualizaCategoria(@RequestBody @Valid Categoria categoria) {
 		try{
-			if(categoria == null){
+			if(!categoriaService.verificaId(categoria.getId())){
 				return new ResponseEntity<String>("Não há essa categoria.", HttpStatus.NOT_FOUND);
 			}
 			return ResponseEntity.ok().body(categoriaService.update(categoria));

@@ -1,4 +1,4 @@
-package com.lead.CatalagoFilmes.DTO;
+package com.lead.CatalagoFilmes.model.DTO;
 
 import lombok.Getter;
 import lombok.Setter;

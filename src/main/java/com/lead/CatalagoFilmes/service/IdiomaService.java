@@ -32,4 +32,12 @@ public class IdiomaService {
 		idiomaRepository.deleteById(id);
 		return "deletado com sucesso.";
 	}
+
+	public boolean verificaId(Long id){
+		if(idiomaRepository.existsById(id)) {
+			return true;
+		}else{
+			return false;
+		}
+	}
 }

@@ -42,11 +42,11 @@ public class IdiomaController {
 	@GetMapping("/idiomaById/{id}")
 	public ResponseEntity<?> listaIdiomaById(@PathVariable Long id) {
 		try{
-			Idioma idioma = idiomaService.findById(id);
-			if(idioma == null){
+			Boolean teste = idiomaService.verificaId(id);
+			if(!teste){
 				return new ResponseEntity<String>("Não há idioma com o id especificado.", HttpStatus.NOT_FOUND);
 			}
-			return ResponseEntity.ok().body(idioma);
+			return ResponseEntity.ok().body(idiomaService.findById(id));
 		}catch (Exception e){
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
@@ -64,7 +64,7 @@ public class IdiomaController {
 	@PutMapping("/atualizaIdioma")
 	public ResponseEntity<?> atualizaIdioma(@RequestBody @Valid Idioma idioma) {
 		try{
-			if(idioma == null){
+			if(!idiomaService.verificaId(idioma.getId())){
 				return new ResponseEntity<String>("Não há esse idioma.", HttpStatus.NOT_FOUND);
 			}
 			return ResponseEntity.ok().body(idiomaService.update(idioma));

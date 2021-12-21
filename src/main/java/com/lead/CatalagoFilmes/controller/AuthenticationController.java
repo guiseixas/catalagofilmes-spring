@@ -1,7 +1,7 @@
 package com.lead.CatalagoFilmes.controller;
 
-import com.lead.CatalagoFilmes.DTO.TokenDTO;
-import com.lead.CatalagoFilmes.DTO.UsuarioDTO;
+import com.lead.CatalagoFilmes.model.DTO.TokenDTO;
+import com.lead.CatalagoFilmes.model.DTO.UsuarioDTO;
 import com.lead.CatalagoFilmes.config.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

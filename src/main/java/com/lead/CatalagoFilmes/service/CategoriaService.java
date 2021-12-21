@@ -35,5 +35,13 @@ public class CategoriaService {
 		categoriaRepository.deleteById(id);
 		return "deletado com sucesso.";
 	}
+
+	public boolean verificaId(Long id){
+		if(categoriaRepository.existsById(id)) {
+			return true;
+		}else{
+			return false;
+		}
+	}
 	
 }

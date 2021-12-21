@@ -58,11 +58,11 @@ public class FilmeController {
 	@GetMapping("/filmeById/{id}")
 	public ResponseEntity<?> listaFilmeById(@PathVariable Long id) {
 		try{
-			Filme filme = filmeService.findById(id);
-			if(filme == null){
+			Boolean teste = filmeService.verificaId(id);
+			if(!teste){
 				throw new Exception("Não há filme com esse id cadastrado.");
 			}
-			return ResponseEntity.ok().body(filme);
+			return ResponseEntity.ok().body(filmeService.findById(id));
 		}catch (Exception e){
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
@@ -80,7 +80,7 @@ public class FilmeController {
 	@PutMapping("/atualizaFilme")
 	public ResponseEntity<?> atualizaFilme(@RequestBody @Valid Filme filme) {
 		try{
-			if(filme == null){
+			if(!filmeService.verificaId(filme.getId())){
 				return new ResponseEntity<String>("Não há esse filme.", HttpStatus.NOT_FOUND);
 			}
 			return ResponseEntity.ok().body(filmeService.update(filme));

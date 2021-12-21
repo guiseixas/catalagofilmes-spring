@@ -42,11 +42,11 @@ public class UsuarioController {
 	@GetMapping("/usuarioById/{id}")
 	public ResponseEntity<?> listaUsuarioById(@PathVariable Long id) {
 		try{
-			Usuario usuario = usuarioService.findById(id);
-			if(usuario == null){
+			Boolean teste = usuarioService.verificaId(id);
+			if(!teste){
 				return new ResponseEntity<String>("Não há usuário com o id especificado.", HttpStatus.NOT_FOUND);
 			}
-			return ResponseEntity.ok().body(usuario);
+			return ResponseEntity.ok().body(usuarioService.findById(id));
 		}catch (Exception e){
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
@@ -64,7 +64,7 @@ public class UsuarioController {
 	@PutMapping("/atualizaUsuario")
 	public ResponseEntity<?> atualizaUsuario(@RequestBody @Valid Usuario usuario) {
 		try {
-			if(usuario == null){
+			if(!usuarioService.verificaId(usuario.getId())){
 				return new ResponseEntity<String>("Não há esse usuario.", HttpStatus.NOT_FOUND);
 			}
 			return ResponseEntity.ok().body(usuarioService.update(usuario));
