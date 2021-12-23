@@ -17,16 +17,13 @@ public class AuthenticationService implements UserDetailsService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    //O que o usuário digita na tela de login
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
         Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
 
         if(usuario.isPresent()){
             return usuario.get();
         }
-
         throw new UsernameNotFoundException("Usuário [" + usuario + "] não encontrado");
     }
 }

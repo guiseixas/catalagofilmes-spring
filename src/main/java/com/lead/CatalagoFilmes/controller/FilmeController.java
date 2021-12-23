@@ -1,7 +1,9 @@
 package com.lead.CatalagoFilmes.controller;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.lead.CatalagoFilmes.model.Categoria;
 import com.lead.CatalagoFilmes.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,19 +28,16 @@ public class FilmeController {
 	@Autowired
 	private FilmeService filmeService;
 
-	@Autowired
-	private CategoriaService categoriaService;
-
 	@GetMapping("/filmes")
 	public ResponseEntity<?> listaFilmes() {
 		try{
 			List<Filme> filmes = filmeService.findAll();
 			if(filmes.isEmpty()){
-				throw new Exception("Não há filmes cadastrados.");
+				return new ResponseEntity<String>("Não existem filmes cadastrados.", HttpStatus.NOT_FOUND);
 			}
-			return ResponseEntity.ok().body(filmes);
+			return new ResponseEntity<List<Filme>>(filmes, HttpStatus.OK);
 		}catch (Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -47,31 +46,32 @@ public class FilmeController {
 		try{
 			List<Filme> filmes = filmeService.searchName(tituloFilme);
 			if(filmes.isEmpty()){
-				throw new Exception("Não há filmes cadastrados com este título.");
+				return new ResponseEntity<String>("Não existe filme com esse título.", HttpStatus.NOT_FOUND);
 			}
-			return ResponseEntity.ok().body(filmes);
+			return new ResponseEntity<List<Filme>>(filmes, HttpStatus.OK);
 		}catch (Exception e){
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@GetMapping("/filmeById/{id}")
-	public ResponseEntity<?> listaFilmeById(@PathVariable Long id) {
+	public ResponseEntity<?> getFilmeById(@PathVariable Long id) {
 		try{
-			Boolean teste = filmeService.verificaId(id);
-			if(!teste){
-				throw new Exception("Não há filme com esse id cadastrado.");
+			Optional<Filme> filme = filmeService.findById(id);
+			if(filme.isEmpty()){
+				return new ResponseEntity<String>("Não existe filme com esse id.", HttpStatus.NOT_FOUND);
 			}
-			return ResponseEntity.ok().body(filmeService.findById(id));
+			return new ResponseEntity<Optional<Filme>>(filme, HttpStatus.OK);
 		}catch (Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@PostMapping("/salvaFilme")
 	public ResponseEntity<?> salvaFilme(@RequestBody @Valid Filme filme) {
 		try{
-			return ResponseEntity.ok().body(filmeService.save(filme));
+			Filme filmeSalvo = filmeService.save(filme);
+			return new ResponseEntity<Filme>(filmeSalvo, HttpStatus.OK);
 		}catch (Exception e){
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -80,10 +80,11 @@ public class FilmeController {
 	@PutMapping("/atualizaFilme")
 	public ResponseEntity<?> atualizaFilme(@RequestBody @Valid Filme filme) {
 		try{
-			if(!filmeService.verificaId(filme.getId())){
-				return new ResponseEntity<String>("Não há esse filme.", HttpStatus.NOT_FOUND);
+			Filme filmeAtualizado = filmeService.update(filme);
+			if(!filmeService.verificaId(filmeAtualizado.getId())){
+				return new ResponseEntity<String>("Não existe essa categoria.", HttpStatus.NOT_FOUND);
 			}
-			return ResponseEntity.ok().body(filmeService.update(filme));
+			return new ResponseEntity<Filme>(filmeAtualizado, HttpStatus.OK);
 		}catch (Exception e){
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -92,8 +93,11 @@ public class FilmeController {
 	@DeleteMapping("/deleteFilmeById/{id}")
 	public ResponseEntity<?> deleteFilmeById(@PathVariable Long id) {
 		try{
-			String delete = filmeService.deleteById(id);
-			return ResponseEntity.ok().body(delete);
+			String response = filmeService.deleteById(id);
+			if(!filmeService.verificaId(id)){
+				return new ResponseEntity<String>("Não existe filme com esse id.", HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<String>(response, HttpStatus.OK);
 		}catch(Exception e){
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
@@ -104,11 +108,11 @@ public class FilmeController {
 		try{
 			List<Filme> filmes = filmeService.findByCategoria(id);
 			if(filmes.isEmpty()){
-				throw new Exception("Não há filmes cadastrados para esse id de categoria.");
+				return new ResponseEntity<String>("Não existem categorias cadastradas com esse id.", HttpStatus.NOT_FOUND);
 			}
-			return ResponseEntity.ok().body(filmes);
+			return new ResponseEntity<List<Filme>>(filmes, HttpStatus.OK);
 		}catch (Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

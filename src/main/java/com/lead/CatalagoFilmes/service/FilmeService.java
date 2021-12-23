@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.lead.CatalagoFilmes.model.Filme;
 import com.lead.CatalagoFilmes.repository.FilmeRepository;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FilmeService {
@@ -21,8 +22,8 @@ public class FilmeService {
 		return filmeRepository.findAll();
 	}
 
-	public Filme findById(Long id) {
-		return filmeRepository.findById(id).get();
+	public Optional<Filme> findById(Long id) {
+		return filmeRepository.findById(id);
 	}
 
 	public Filme save(Filme filme) {
@@ -38,20 +39,14 @@ public class FilmeService {
 		return "deletado com sucesso.";
 	}
 
-	public boolean verificaId(Long id){
-		if(filmeRepository.existsById(id)) {
-			return true;
-		}else{
-			return false;
-		}
-	}
+	public boolean verificaId(Long id){ return filmeRepository.existsById(id); }
 
 	public List<Filme> searchName(String tituloFilme){ return filmeRepository.searchName(tituloFilme); }
 
 	public List<Filme> findByCategoria(Long id){
-		Categoria c = categoriaService.findById(id);
-		if(c != null) {
-			return filmeRepository.findByCategoria(c);
+		Optional<Categoria> categoria = categoriaService.findById(id);
+		if(categoria.isPresent()) {
+			return filmeRepository.findByCategoria(categoria.get());
 		}
 		return null;
 	}

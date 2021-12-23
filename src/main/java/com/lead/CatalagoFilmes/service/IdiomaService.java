@@ -1,6 +1,8 @@
 package com.lead.CatalagoFilmes.service;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.lead.CatalagoFilmes.model.Idioma;
@@ -16,8 +18,8 @@ public class IdiomaService {
 		return idiomaRepository.findAll();
 	}
 	
-	public Idioma findById(Long id) {
-		return idiomaRepository.findById(id).get();
+	public Optional<Idioma> findById(Long id) {
+		return idiomaRepository.findById(id);
 	}
 	
 	public Idioma save(Idioma idioma) {
@@ -33,11 +35,5 @@ public class IdiomaService {
 		return "deletado com sucesso.";
 	}
 
-	public boolean verificaId(Long id){
-		if(idiomaRepository.existsById(id)) {
-			return true;
-		}else{
-			return false;
-		}
-	}
+	public boolean verificaId(Long id){ return idiomaRepository.existsById(id); }
 }

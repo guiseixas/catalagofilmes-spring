@@ -14,19 +14,10 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 
 @Entity
 public class Usuario implements UserDetails {
-
-	public Usuario(Long id, String nome, String cpf, String telefone, String email, String senha, Idioma idioma) {
-		this.id = id;
-		this.nome = nome;
-		this.cpf = cpf;
-		this.telefone = telefone;
-		this.email = email;
-		this.senha = senha;
-		this.idioma = idioma;
-	}
 
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;

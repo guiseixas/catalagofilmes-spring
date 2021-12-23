@@ -1,9 +1,7 @@
 package com.lead.CatalagoFilmes.controller;
 
 import java.util.List;
-
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.lead.CatalagoFilmes.model.Usuario;
 import com.lead.CatalagoFilmes.service.UsuarioService;
-
 import javax.validation.Valid;
 
 @Controller
@@ -31,31 +28,32 @@ public class UsuarioController {
 		try{
 			List<Usuario> usuarios = usuarioService.findAll();
 			if(usuarios.isEmpty()){
-				throw new Exception("Não há usuários cadastrados.");
+				return new ResponseEntity<String>("Não existem usuários cadastrados.", HttpStatus.NOT_FOUND);
 			}
 			return ResponseEntity.ok().body(usuarios);
 		}catch(Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@GetMapping("/usuarioById/{id}")
-	public ResponseEntity<?> listaUsuarioById(@PathVariable Long id) {
+	public ResponseEntity<?> getUsuarioById(@PathVariable Long id) {
 		try{
-			Boolean teste = usuarioService.verificaId(id);
-			if(!teste){
-				return new ResponseEntity<String>("Não há usuário com o id especificado.", HttpStatus.NOT_FOUND);
+			Optional<Usuario> usuario = usuarioService.findById(id);
+			if(usuario.isEmpty()){
+				return new ResponseEntity<String>("Não existe usuário com esse id.", HttpStatus.NOT_FOUND);
 			}
-			return ResponseEntity.ok().body(usuarioService.findById(id));
+			return new ResponseEntity<Optional<Usuario>>(usuario, HttpStatus.OK);
 		}catch (Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@PostMapping("/salvaUsuario")
 	public ResponseEntity<?> salvaUsuario(@RequestBody @Valid Usuario usuario) {
 		try{
-			return ResponseEntity.ok().body(usuarioService.save(usuario));
+			Usuario usuarioSalvo = usuarioService.save(usuario);
+			return new ResponseEntity<Usuario>(usuarioSalvo, HttpStatus.OK);
 		}catch(Exception e){
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -64,22 +62,26 @@ public class UsuarioController {
 	@PutMapping("/atualizaUsuario")
 	public ResponseEntity<?> atualizaUsuario(@RequestBody @Valid Usuario usuario) {
 		try {
-			if(!usuarioService.verificaId(usuario.getId())){
-				return new ResponseEntity<String>("Não há esse usuario.", HttpStatus.NOT_FOUND);
+			Usuario usuarioAtualizado = usuarioService.update(usuario);
+			if(!usuarioService.verificaId(usuarioAtualizado.getId())){
+				return new ResponseEntity<String>("Não existe esse usuario.", HttpStatus.NOT_FOUND);
 			}
-			return ResponseEntity.ok().body(usuarioService.update(usuario));
+			return new ResponseEntity<Usuario>(usuarioAtualizado, HttpStatus.OK);
 		}catch (Exception e){
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@DeleteMapping("/deleteUsuarioById/{id}")
-	public ResponseEntity<String> deleteUsuarioById(@PathVariable Long id) {
+	public ResponseEntity<?> deleteUsuarioById(@PathVariable Long id) {
 		try{
-			String delete = usuarioService.deleteById(id);
-			return ResponseEntity.ok().body(delete);
+			String response = usuarioService.deleteById(id);
+			if(!usuarioService.verificaId(id)){
+				return new ResponseEntity<String>("Não existe usuário com esse id.", HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<String>(response, HttpStatus.OK);
 		}catch (Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

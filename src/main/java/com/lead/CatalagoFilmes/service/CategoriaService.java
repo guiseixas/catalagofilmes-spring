@@ -11,22 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 public class CategoriaService {
-	
+
 	@Autowired
 	CategoriaRepository categoriaRepository;
 	
-	public List<Categoria> findAll() {
-		return categoriaRepository.findAll();
-	}
+	public List<Categoria> findAll() { return categoriaRepository.findAll(); }
 	
-	public Categoria findById(Long id) { return categoriaRepository.findById(id).get(); }
-	
-	//Primeiro a ser feito, gera o ID.
+	public Optional<Categoria> findById(Long id) { return categoriaRepository.findById(id); }
+
 	public Categoria save(Categoria categoria) {
 		return categoriaRepository.save(categoria);
 	}
-	
-	//O objeto tem um ID no método UPDATE.
+
 	public Categoria update(Categoria categoria) {
 		return categoriaRepository.save(categoria);
 	}
@@ -36,12 +32,6 @@ public class CategoriaService {
 		return "deletado com sucesso.";
 	}
 
-	public boolean verificaId(Long id){
-		if(categoriaRepository.existsById(id)) {
-			return true;
-		}else{
-			return false;
-		}
-	}
-	
+	public boolean verificaId(Long id){ return categoriaRepository.existsById(id); }
+
 }

@@ -4,6 +4,7 @@ import com.lead.CatalagoFilmes.model.DTO.TokenDTO;
 import com.lead.CatalagoFilmes.model.DTO.UsuarioDTO;
 import com.lead.CatalagoFilmes.config.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,15 +27,14 @@ public class AuthenticationController {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity<TokenDTO> autenticar(@RequestBody @Validated UsuarioDTO usuarioDTO){
+    public ResponseEntity<?> autenticar(@RequestBody @Validated UsuarioDTO usuarioDTO){
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = usuarioDTO.convert();
-
         try {
             Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
             String token = tokenService.generateToken(authentication);
             return ResponseEntity.ok(new TokenDTO(token, "Bearer")) ;
         } catch (AuthenticationException e) {
-            return ResponseEntity.badRequest().build();
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNAUTHORIZED);
         }
     }
 }

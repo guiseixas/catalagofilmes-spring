@@ -1,6 +1,8 @@
 package com.lead.CatalagoFilmes.controller;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.lead.CatalagoFilmes.service.CategoriaService;
 import com.lead.CatalagoFilmes.model.Categoria;
-
 import javax.validation.Valid;
 
 @Controller
@@ -29,31 +30,32 @@ public class CategoriaController {
 		try{
 			List<Categoria> categorias = categoriaService.findAll();
 			if(categorias.isEmpty()){
-				throw new Exception("Não há categorias cadastradas.");
+				return new ResponseEntity<String>("Não existem categorias cadastradas.", HttpStatus.NOT_FOUND);
 			}
-			return ResponseEntity.ok().body(categorias);
+			return new ResponseEntity<List<Categoria>>(categorias, HttpStatus.OK);
 		}catch (Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@GetMapping("/categoriaById/{id}")
-	public ResponseEntity<?> listaCategoriaById(@PathVariable Long id) {
+	public ResponseEntity<?> getCategoriaById(@PathVariable Long id) {
 		try {
-			Boolean teste = categoriaService.verificaId(id);
-			if(!teste){
-				return new ResponseEntity<String>("Não há categoria com o id especificado", HttpStatus.NOT_FOUND);
+			Optional<Categoria> categoria = categoriaService.findById(id);
+			if(categoria.isEmpty()){
+				return new ResponseEntity<String>("Não existe categoria com esse id.", HttpStatus.NOT_FOUND);
 			}
-			return ResponseEntity.ok().body(categoriaService.findById(id));
+			return new ResponseEntity<Optional<Categoria>>(categoria, HttpStatus.OK);
 		} catch (Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@PostMapping("/salvaCategoria")
 	public ResponseEntity<?> salvaCategoria(@RequestBody @Valid Categoria categoria) {
 		try{
-			return ResponseEntity.ok().body(categoriaService.save(categoria));
+			Categoria categoriaSalva = categoriaService.save(categoria);
+			return new ResponseEntity<Categoria>(categoriaSalva, HttpStatus.OK);
 		}catch (Exception e){
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -62,22 +64,26 @@ public class CategoriaController {
 	@PutMapping("/atualizaCategoria")
 	public ResponseEntity<?> atualizaCategoria(@RequestBody @Valid Categoria categoria) {
 		try{
-			if(!categoriaService.verificaId(categoria.getId())){
-				return new ResponseEntity<String>("Não há essa categoria.", HttpStatus.NOT_FOUND);
+			Categoria categoriaAtualizada = categoriaService.update(categoria);
+			if(!categoriaService.verificaId(categoriaAtualizada.getId())){
+				return new ResponseEntity<String>("Não existe essa categoria.", HttpStatus.NOT_FOUND);
 			}
-			return ResponseEntity.ok().body(categoriaService.update(categoria));
+			return new ResponseEntity<Categoria>(categoriaAtualizada, HttpStatus.OK);
 		}catch (Exception e){
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@DeleteMapping("/deleteCategoriaById/{id}")
-	public ResponseEntity<String> deleteCategoriaById(@PathVariable Long id) {
+	public ResponseEntity<?> deleteCategoriaById(@PathVariable Long id) {
 		try{
-			String delete = categoriaService.deleteById(id);
-			return ResponseEntity.ok().body(delete);
-		}catch(Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
+			String response = categoriaService.deleteById(id);
+			if(!categoriaService.verificaId(id)){
+				return new ResponseEntity<String>("Não existe categoria com esse id.", HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<String>(response, HttpStatus.OK);
+		}catch (Exception e){
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

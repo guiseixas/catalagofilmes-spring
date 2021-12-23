@@ -1,6 +1,7 @@
 package com.lead.CatalagoFilmes.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,12 @@ public class UsuarioService {
 		return usuarioRepository.findAll();
 	}
 	
-	public Usuario findById(Long id) {
-		return usuarioRepository.findById(id).get();
+	public Optional<Usuario> findById(Long id) {
+		return usuarioRepository.findById(id);
 	}
 
-	public Usuario findByEmail(String email) {
-		return usuarioRepository.findByEmail(email).get();
+	public Optional<Usuario> findByEmail(String email) {
+		return usuarioRepository.findByEmail(email);
 	}
 
 	public Usuario save(Usuario usuario) {
@@ -38,11 +39,5 @@ public class UsuarioService {
 		return "deletado com sucesso.";
 	}
 
-	public boolean verificaId(Long id){
-		if(usuarioRepository.existsById(id)) {
-			return true;
-		}else{
-			return false;
-		}
-	}
+	public boolean verificaId(Long id){ return usuarioRepository.existsById(id); }
 }
