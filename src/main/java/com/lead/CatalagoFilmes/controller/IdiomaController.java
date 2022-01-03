@@ -3,6 +3,7 @@ package com.lead.CatalagoFilmes.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.lead.CatalagoFilmes.model.Categoria;
 import com.lead.CatalagoFilmes.model.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -36,9 +37,9 @@ public class IdiomaController {
 			if(idiomas.isEmpty()){
 				return new ResponseEntity<String>("Não existem idiomas cadastrados.", HttpStatus.NOT_FOUND);
 			}
-			return ResponseEntity.ok().body(idiomas);
+			return new ResponseEntity<List<Idioma>>(idiomas, HttpStatus.OK);
 		} catch(Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -51,7 +52,7 @@ public class IdiomaController {
 			}
 			return new ResponseEntity<Optional<Idioma>>(idioma, HttpStatus.OK);
 		}catch (Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 

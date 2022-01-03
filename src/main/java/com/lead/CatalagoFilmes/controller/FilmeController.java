@@ -37,7 +37,7 @@ public class FilmeController {
 			}
 			return new ResponseEntity<List<Filme>>(filmes, HttpStatus.OK);
 		}catch (Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -63,7 +63,7 @@ public class FilmeController {
 			}
 			return new ResponseEntity<Optional<Filme>>(filme, HttpStatus.OK);
 		}catch (Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -82,7 +82,7 @@ public class FilmeController {
 		try{
 			Filme filmeAtualizado = filmeService.update(filme);
 			if(!filmeService.verificaId(filmeAtualizado.getId())){
-				return new ResponseEntity<String>("Não existe essa categoria.", HttpStatus.NOT_FOUND);
+				return new ResponseEntity<String>("Não existe esse filme.", HttpStatus.NOT_FOUND);
 			}
 			return new ResponseEntity<Filme>(filmeAtualizado, HttpStatus.OK);
 		}catch (Exception e){
@@ -99,7 +99,7 @@ public class FilmeController {
 			}
 			return new ResponseEntity<String>(response, HttpStatus.OK);
 		}catch(Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -112,7 +112,7 @@ public class FilmeController {
 			}
 			return new ResponseEntity<List<Filme>>(filmes, HttpStatus.OK);
 		}catch (Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 

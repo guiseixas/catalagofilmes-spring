@@ -34,10 +34,11 @@ public class CategoriaController {
 			}
 			return new ResponseEntity<List<Categoria>>(categorias, HttpStatus.OK);
 		}catch (Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
+	//aq
 	@GetMapping("/categoriaById/{id}")
 	public ResponseEntity<?> getCategoriaById(@PathVariable Long id) {
 		try {
@@ -47,7 +48,7 @@ public class CategoriaController {
 			}
 			return new ResponseEntity<Optional<Categoria>>(categoria, HttpStatus.OK);
 		} catch (Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 

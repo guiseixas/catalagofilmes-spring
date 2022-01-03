@@ -2,6 +2,8 @@ package com.lead.CatalagoFilmes.controller;
 
 import java.util.List;
 import java.util.Optional;
+
+import com.lead.CatalagoFilmes.model.Categoria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,9 +32,9 @@ public class UsuarioController {
 			if(usuarios.isEmpty()){
 				return new ResponseEntity<String>("Não existem usuários cadastrados.", HttpStatus.NOT_FOUND);
 			}
-			return ResponseEntity.ok().body(usuarios);
+			return new ResponseEntity<List<Usuario>>(usuarios, HttpStatus.OK);
 		}catch(Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -45,7 +47,7 @@ public class UsuarioController {
 			}
 			return new ResponseEntity<Optional<Usuario>>(usuario, HttpStatus.OK);
 		}catch (Exception e){
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 
