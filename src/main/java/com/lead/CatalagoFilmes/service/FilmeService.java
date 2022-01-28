@@ -34,10 +34,7 @@ public class FilmeService {
 		return filmeRepository.save(filme);
 	}
 
-	public String deleteById(Long id) {
-		filmeRepository.deleteById(id);
-		return "deletado com sucesso.";
-	}
+	public void deleteById(Long id) { filmeRepository.deleteById(id);}
 
 	public boolean verificaId(Long id){ return filmeRepository.existsById(id); }
 

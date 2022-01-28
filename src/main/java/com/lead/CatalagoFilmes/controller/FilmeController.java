@@ -93,11 +93,11 @@ public class FilmeController {
 	@DeleteMapping("/deleteFilmeById/{id}")
 	public ResponseEntity<?> deleteFilmeById(@PathVariable Long id) {
 		try{
-			String response = filmeService.deleteById(id);
 			if(!filmeService.verificaId(id)){
 				return new ResponseEntity<String>("Não existe filme com esse id.", HttpStatus.NOT_FOUND);
 			}
-			return new ResponseEntity<String>(response, HttpStatus.OK);
+			filmeService.deleteById(id);
+			return new ResponseEntity<>(HttpStatus.OK);
 		}catch(Exception e){
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}

@@ -38,7 +38,6 @@ public class CategoriaController {
 		}
 	}
 
-	//aq
 	@GetMapping("/categoriaById/{id}")
 	public ResponseEntity<?> getCategoriaById(@PathVariable Long id) {
 		try {
