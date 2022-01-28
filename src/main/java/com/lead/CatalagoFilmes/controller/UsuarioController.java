@@ -77,11 +77,11 @@ public class UsuarioController {
 	@DeleteMapping("/deleteUsuarioById/{id}")
 	public ResponseEntity<?> deleteUsuarioById(@PathVariable Long id) {
 		try{
-			String response = usuarioService.deleteById(id);
 			if(!usuarioService.verificaId(id)){
 				return new ResponseEntity<String>("Não existe usuário com esse id.", HttpStatus.NOT_FOUND);
 			}
-			return new ResponseEntity<String>(response, HttpStatus.OK);
+			usuarioService.deleteById(id);
+			return new ResponseEntity<>(HttpStatus.OK);
 		}catch (Exception e){
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}

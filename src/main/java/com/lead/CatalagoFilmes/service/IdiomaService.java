@@ -30,9 +30,8 @@ public class IdiomaService {
 		return idiomaRepository.save(idioma);
 	}
 	
-	public String deleteById(Long id) {
+	public void deleteById(Long id) {
 		idiomaRepository.deleteById(id);
-		return "deletado com sucesso.";
 	}
 
 	public boolean verificaId(Long id){ return idiomaRepository.existsById(id); }

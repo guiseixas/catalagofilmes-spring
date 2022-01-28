@@ -27,9 +27,8 @@ public class CategoriaService {
 		return categoriaRepository.save(categoria);
 	}
 	
-	public String deleteById(Long id) {
+	public void deleteById(Long id) {
 		categoriaRepository.deleteById(id);
-		return "deletado com sucesso.";
 	}
 
 	public boolean verificaId(Long id){ return categoriaRepository.existsById(id); }

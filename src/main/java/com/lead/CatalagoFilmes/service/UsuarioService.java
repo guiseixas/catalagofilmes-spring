@@ -46,9 +46,8 @@ public class UsuarioService {
 		return usuarioRepository.save(usuario);
 	}
 	
-	public String deleteById(Long id) {
+	public void deleteById(Long id) {
 		usuarioRepository.deleteById(id);
-		return "deletado com sucesso.";
 	}
 
 	public boolean verificaId(Long id){ return usuarioRepository.existsById(id); }

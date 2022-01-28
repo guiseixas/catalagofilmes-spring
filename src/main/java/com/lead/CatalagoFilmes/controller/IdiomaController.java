@@ -82,11 +82,11 @@ public class IdiomaController {
 	@DeleteMapping("/deleteIdiomaById/{id}")
 	public ResponseEntity<?> deleteIdiomaById(@PathVariable Long id) {
 		try{
-			String response = idiomaService.deleteById(id);
 			if(!idiomaService.verificaId(id)){
 				return new ResponseEntity<String>("Não existe idioma com esse id.", HttpStatus.NOT_FOUND);
 			}
-			return new ResponseEntity<String>(response, HttpStatus.OK);
+			idiomaService.deleteById(id);
+			return new ResponseEntity<>(HttpStatus.OK);
 		}catch(Exception e){
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
